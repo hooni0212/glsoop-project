@@ -1,0 +1,39 @@
+{
+  "name": "bygpt",
+  "version": "1.0.0",
+  "main": "server.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:e2e": "playwright test",
+    "e2e:ui": "playwright test tests/e2e/ui-snapshots.spec.js && node scripts/build-snapshot-gallery.mjs",
+    "e2e:ui:show": "node scripts/build-snapshot-gallery.mjs",
+    "start": "node server.js",
+    "verify:phase2": "node scripts/verify-phase2.mjs",
+    "verify:phase3": "node scripts/verify-phase3.mjs",
+    "backfill:quests": "node scripts/backfill-permanent-quests.mjs",
+    "phase3:seed-legacy-achievements": "node scripts/phase3-seed-legacy-achievements.mjs",
+    "phase3:migrate-legacy-achievements": "node scripts/phase3-migrate-legacy-achievements.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "body-parser": "^2.2.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "express-rate-limit": "^7.2.1",
+    "helmet": "^7.2.0",
+    "jsonwebtoken": "^9.0.2",
+    "morgan": "^1.10.0",
+    "nodemailer": "^7.0.10",
+    "sanitize-html": "^2.17.0",
+    "sqlite3": "^5.1.7"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.2"
+  }
+}

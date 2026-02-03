@@ -1,0 +1,64 @@
+
+/* =========================
+   3. 검색바 (사용 시)
+========================= */
+
+.search-form {
+  width: 50%;
+  margin: 0;
+}
+
+.underline-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid var(--gls-color-search-input);
+  color: var(--gls-color-search-input);
+  font-size: 1rem;
+  padding: 0.3rem 0;
+}
+
+.underline-input::placeholder {
+  color: var(--gls-color-search-placeholder);
+}
+
+.underline-input:focus {
+  outline: none;
+  border-bottom: 2px solid var(--gls-color-search-accent);
+}
+
+/* =========================
+   4. 섹션 / 히어로 영역
+========================= */
+
+/* =========================
+   4. 피드 프리뷰 (인덱스 오버라이드)
+========================= */
+
+body.page-index .feed-post-content,
+body.page-explore .feed-post-content {
+  --gls-feed-preview-lines: 7;
+  min-height: calc(
+    (var(--gls-feed-preview-lines) * 1em * var(--gls-lh-relaxed, 1.7))
+    + 1.6rem
+  );
+}
+
+@media (min-width: 768px) {
+  body.page-index .feed-post-content,
+  body.page-explore .feed-post-content {
+    --gls-feed-preview-lines: 6;
+  }
+}
+
+body.page-index .gls-post-card .feed-post-content .quote-card,
+body.page-explore .gls-post-card .feed-post-content .quote-card {
+  padding: var(--gls-space-5, 20px) var(--gls-space-6, 24px);
+}
+
+@media (max-width: 576px) {
+  body.page-index .gls-post-card .feed-post-content .quote-card,
+  body.page-explore .gls-post-card .feed-post-content .quote-card {
+    padding: var(--gls-space-4, 16px) var(--gls-space-5, 20px);
+  }
+}

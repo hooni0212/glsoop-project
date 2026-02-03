@@ -1,0 +1,235 @@
+/* =========================
+   summer-theme.css
+   - body.summer-theme 가 있을 때만 적용
+========================= */
+
+/* 0. 전체 배경 & 텍스트 */
+body.summer-theme {
+  background: radial-gradient(
+    circle at top,
+    #EAF8FF 0%,
+    #F6FCFF 45%,
+    #F3FCF8 100%
+  ); /* 하늘 + 얕은 바다 (톤 다운) */
+  color: #1F2D34;
+  --author-surface: rgba(229, 247, 255, 0.6);
+  --author-card-bg: rgba(255, 255, 255, 0.95);
+  --author-card-shadow: 0 12px 32px rgba(70, 156, 179, 0.16);
+  --author-card-shadow-compact: 0 8px 18px rgba(70, 156, 179, 0.12);
+  --author-text-muted: #2f6f6a;
+  --author-divider: rgba(47, 145, 133, 0.18);
+  --gls-action-accent: #2f9185;
+  --gls-action-border: rgba(47, 145, 133, 0.22);
+  --gls-action-border-strong: rgba(47, 145, 133, 0.34);
+  --gls-action-surface: rgba(255, 255, 255, 0.94);
+  --gls-action-surface-strong: rgba(47, 145, 133, 0.08);
+  --gls-action-glow: 0 10px 26px rgba(47, 145, 133, 0.18);
+  --author-accent: #3c9ba0;
+  --gls-account-surface: color-mix(in srgb, #f6fffd 88%, rgba(47, 145, 133, 0.12));
+  --gls-account-menu-surface: color-mix(in srgb, rgba(255, 255, 255, 0.94) 82%, rgba(47, 145, 133, 0.08));
+  --gls-account-border: color-mix(in srgb, rgba(47, 145, 133, 0.26) 65%, rgba(255, 255, 255, 0.38));
+  --gls-account-menu-border: color-mix(in srgb, rgba(47, 145, 133, 0.24) 70%, rgba(255, 255, 255, 0.34));
+  --gls-account-text: color-mix(in srgb, #1f3f3a 68%, #f4fffd 32%);
+  --gls-account-muted: color-mix(in srgb, #3e7068 72%, rgba(235, 252, 250, 0.76));
+  --gls-account-avatar: color-mix(in srgb, #2f9185 62%, #eaffff 38%);
+  --gls-account-shadow: 0 8px 20px rgba(47, 145, 133, 0.18);
+  --gls-account-shadow-hover: 0 12px 26px rgba(47, 145, 133, 0.2);
+  --gls-account-menu-shadow: 0 10px 24px rgba(22, 78, 70, 0.16);
+}
+
+/* =========================
+   1. 네비게이션 바
+========================= */
+
+body.summer-theme .custom-navbar {
+  background: linear-gradient(90deg, #6bc2e0, #62c6b0); /* 시원한 하늘+바다 (소프트) */
+  box-shadow: 0 6px 18px rgba(70, 156, 179, 0.3);
+}
+
+body.summer-theme .custom-navbar .navbar-brand {
+  background: linear-gradient(120deg, #F9FFFF, #E6FAFF);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* =========================
+   2. 히어로 섹션
+========================= */
+
+body.summer-theme .hero-section {
+  background: radial-gradient(
+    circle at top,
+    #F5FDFF 0%,
+    #E5F7FF 40%,
+    #F0FCF8 100%
+  );
+}
+
+body.summer-theme .hero-card {
+  background: var(--gls-glass-bg-strong);
+  border: 1px solid var(--gls-glass-border);
+  backdrop-filter: blur(var(--gls-glass-blur));
+  -webkit-backdrop-filter: blur(var(--gls-glass-blur));
+  box-shadow: 0 18px 42px rgba(70, 156, 179, 0.2);
+  border-radius: 1.4rem;
+}
+
+
+body.summer-theme .hero-title {
+  color: #2b7999;
+}
+
+body.summer-theme .hero-subtitle {
+  color: #3b7a71;
+}
+
+/* =========================
+   3. 버튼
+========================= */
+
+body.summer-theme .hero-cta-btn,
+body.summer-theme .btn-success {
+  color: #2f9185;
+  background-color: transparent;
+  border: 1px solid rgba(47, 145, 133, 0.78);
+  box-shadow: 0 10px 26px rgba(47, 145, 133, 0.24);
+}
+
+body.summer-theme .hero-cta-btn:hover,
+body.summer-theme .hero-cta-btn:focus-visible,
+body.summer-theme .hero-cta-btn:active,
+body.summer-theme .btn-success:hover,
+body.summer-theme .btn-success:focus-visible,
+body.summer-theme .btn-success.active,
+body.summer-theme .btn-success:active {
+  color: #ffffff;
+  background-color: #3aa995;
+  border-color: #3aa995;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(47, 145, 133, 0.3);
+}
+
+body.summer-theme .gls-btn-secondary {
+  color: #2f9185;
+  border-color: rgba(47, 145, 133, 0.7);
+  background-color: transparent;
+  box-shadow: 0 8px 18px rgba(70, 156, 179, 0.16);
+}
+
+body.summer-theme .gls-btn-secondary:hover,
+body.summer-theme .gls-btn-secondary:focus-visible,
+body.summer-theme .gls-btn-secondary.active,
+body.summer-theme .gls-btn-secondary:active {
+  color: #ffffff;
+  background-color: #3aa995;
+  border-color: #3aa995;
+  box-shadow: 0 12px 28px rgba(47, 145, 133, 0.28);
+}
+
+/* =========================
+   4. quote-card
+========================= */
+
+body.summer-theme .quote-card {
+  background-color: #F5FDFF;  /* 연한 하늘 + 종이 */
+  background-image: none;
+  color: #1E2A33;
+  box-shadow: 0 10px 24px rgba(70, 156, 179, 0.16);
+}
+
+/* =========================
+   5. 뱃지 / 태그
+========================= */
+
+body.summer-theme .gls-author-badge {
+  background-color: #E5F7FF !important;
+  border-color: #b6e5fb !important;
+  color: #2b7999 !important;
+}
+
+body.summer-theme .gls-tag-btn {
+  background-color: transparent;
+  border-color: #b6e5fb;
+  color: #2b7999;
+}
+
+body.summer-theme .gls-tag-btn:hover {
+  background-color: #d9f3f2;
+  border-color: #7ac7c0;
+  color: #246a64;
+}
+
+/* 선택된 해시태그 칩 (작성/검색 영역) */
+body.summer-theme .hashtag-chip {
+  background-color: #E5F7FF;
+  color: #2b7999;
+  border: 1px solid #b6e5fb;
+}
+body.summer-theme .hashtag-chip .hashtag-chip-remove {
+  color: #3b7a71;
+}
+body.summer-theme .hashtag-chip .hashtag-chip-remove:hover {
+  color: #2b7999;
+}
+
+/* =========================
+   6. 좋아요 하트
+========================= */
+
+body.summer-theme .like-btn .like-heart {
+  color: #145055;
+}
+
+body.summer-theme .like-btn.liked .like-heart {
+  color: #f2bf63; /* 태양빛 느낌 노랑 (톤 다운) */
+}
+
+/* =========================
+   7. 푸터
+========================= */
+
+body.summer-theme {
+  --gls-footer-bg: linear-gradient(90deg, #6bc2e0, #62c6b0);
+  --gls-footer-text: #F9FFFF;
+  --gls-footer-border: rgba(255, 255, 255, 0.25);
+  --gls-footer-link: #F9FFFF;
+}
+
+/* 피드 탭 & 저장 버튼 테마 매핑 */
+body.summer-theme .feed-tabs .feed-tab {
+  color: #2f9185;
+  border-color: rgba(47, 145, 133, 0.24);
+  background: rgba(47, 145, 133, 0.08);
+}
+
+body.summer-theme .feed-tabs .feed-tab.feed-tab-active,
+body.summer-theme .feed-tabs .feed-tab.active {
+  background: #2f9185;
+  border-color: #2f9185;
+  color: #fff;
+}
+
+body.summer-theme .nav-category-item:hover,
+body.summer-theme .nav-category-item:focus-visible {
+  background: rgba(47, 145, 133, 0.12);
+  color: #2a6f66;
+}
+
+body.summer-theme .post-category-label {
+  background: rgba(47, 145, 133, 0.08);
+  border-color: rgba(47, 145, 133, 0.22);
+  color: #2a6f66;
+}
+
+body.summer-theme .gls-save-btn {
+  color: #2f9185;
+  border-color: #2f9185;
+}
+
+body.summer-theme .gls-save-btn:hover,
+body.summer-theme .gls-save-btn:focus-visible {
+  background: rgba(47, 145, 133, 0.12);
+  color: #2a6f66;
+  border-color: #2f9185;
+}

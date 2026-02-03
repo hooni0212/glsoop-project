@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!--
+    관리자 대시보드(admin.html)
+    - 연동 CSS: base.css, components.css
+    - 연동 JS: header.js(공통 네비), admin.js(관리자 인증/유저·글 관리 테이블)
+    - 주요 요소: #usersBox, #postsBox 컨테이너에 admin.js가 표를 렌더링
+  -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>관리자 페이지 | 글숲</title>
+
+  <!-- Google Fonts: 사이트에서 사용할 폰트들 로드 -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Bootstrap CSS: 레이아웃 / 기본 컴포넌트 스타일 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+
+  <!-- 글숲 공통 CSS -->
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body class="winter-theme">
+  <!-- 상단 네비게이션 바 -->
+  <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top nav-height">
+    <div class="gls-container">
+      <!-- 로고(클릭 시 메인으로 이동) -->
+      <a class="navbar-brand" href="/index.html">글숲</a>
+
+      <!-- 모바일 토글 버튼 -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-gls-toggle="nav" aria-controls="navbarNav" aria-expanded="false"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- 네비게이션 링크 영역 -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav gls-me-lg-3 category-dropdown-nav">
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="categoryDropdown"
+              role="button"
+              data-gls-toggle="dropdown"
+              aria-expanded="false"
+            >
+              카테고리
+            </a>
+            <ul class="dropdown-menu nav-category-menu" aria-labelledby="categoryDropdown">
+              <li><a class="dropdown-item nav-category-item" href="/explore">전체</a></li>
+              <li><a class="dropdown-item nav-category-item" href="/html/category.html?category=poem">시</a></li>
+              <li><a class="dropdown-item nav-category-item" href="/html/category.html?category=essay">에세이/일기</a></li>
+              <li><a class="dropdown-item nav-category-item" href="/html/category.html?category=short">짧은 구절</a></li>
+            </ul>
+          </li>
+        </ul>
+
+        <!-- 로그인 전 노출되는 메뉴 -->
+        <ul class="navbar-nav gls-ms-auto before-login">
+          <li class="nav-item">
+            <a class="nav-link" href="/html/login.html">로그인</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/html/signup.html">회원가입</a>
+          </li>
+        </ul>
+
+        <!-- 로그인 후 노출되는 메뉴 (기본은 display:none; → header.js에서 토글) -->
+        <ul class="navbar-nav gls-ms-auto after-login" style="display: none;">
+          <li class="nav-item">
+            <!-- 로그인한 사용자 이름 표시 -->
+            <span class="nav-link" id="navUserName"></span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/html/mypage.html">마이페이지</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/html/editor.html">글쓰기</a>
+          </li>
+          <li class="nav-item">
+            <!-- 로그아웃 버튼 (header.js에서 이벤트 등록) -->
+            <button
+              class="user-profile"
+              id="logoutBtn"
+              type="button"
+              aria-label="로그아웃"
+            >
+              <span class="user-profile-inner">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <g data-name="Layer 2" id="Layer_2">
+                    <path
+                      d="m15.626 11.769a6 6 0 1 0 -7.252 0 9.008 9.008 0 0 0 -5.374 8.231 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 9.008 9.008 0 0 0 -5.374-8.231zm-7.626-4.769a4 4 0 1 1 4 4 4 4 0 0 1 -4-4zm10 14h-12a1 1 0 0 1 -1-1 7 7 0 0 1 14 0 1 1 0 0 1 -1 1z"
+                    ></path>
+                  </g>
+                </svg>
+                <span class="user-profile-label">로그아웃</span>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <section class="gls-py-5 gls-mt-5 admin-shell">
+    <div class="gls-container admin-container">
+      <div class="gls-flex gls-flex-col gls-lg-flex-row gls-gap-4">
+        <aside class="admin-sidebar card glass-card gls-p-3">
+          <div class="gls-spread gls-mb-3">
+            <div>
+              <p class="gls-text-muted gls-text-small gls-mb-0">관리자</p>
+              <h4 class="gls-mb-0">글숲 운영실</h4>
+            </div>
+            <span class="gls-badge gls-badge-soft">v2</span>
+          </div>
+          <div id="adminStatus" class="gls-mb-3">
+            <p class="gls-text-muted">접근 권한을 확인하는 중입니다...</p>
+          </div>
+          <div class="admin-tabs" role="tablist" aria-orientation="vertical">
+            <button class="nav-link active" data-target="usersTab" type="button">Users</button>
+            <button class="nav-link" data-target="postsTab" type="button">Posts</button>
+            <button class="nav-link" data-target="questsTab" type="button">Quests</button>
+          </div>
+        </aside>
+
+        <div class="gls-flex-1">
+          <div id="adminContent" class="admin-content" style="display:none;">
+            <div class="admin-theme-card card glass-card gls-mb-4">
+              <div class="card-body gls-flex gls-flex-col gls-lg-flex-row gls-gap-3 gls-lg-items-center gls-justify-between">
+                <div>
+                  <p class="gls-text-muted gls-text-small gls-mb-1">테마 설정</p>
+                  <h5 class="gls-mb-1">계절 테마를 선택하고 적용하세요</h5>
+                  <p class="gls-text-muted gls-mb-0">봄·여름·가을·겨울 테마를 미리보기 후 적용 버튼으로 확정하세요.</p>
+                </div>
+                <div class="admin-theme-controls gls-flex gls-flex-col gls-lg-items-end gls-gap-2">
+                  <div class="gls-segmented" role="group" aria-label="계절 테마 선택">
+                    <input type="radio" class="gls-seg-input" name="adminTheme" id="adminThemeSpring" value="spring">
+                    <label class="gls-btn gls-btn-sm gls-btn-secondary" for="adminThemeSpring">봄</label>
+
+                    <input type="radio" class="gls-seg-input" name="adminTheme" id="adminThemeSummer" value="summer">
+                    <label class="gls-btn gls-btn-sm gls-btn-secondary" for="adminThemeSummer">여름</label>
+
+                    <input type="radio" class="gls-seg-input" name="adminTheme" id="adminThemeAutumn" value="autumn">
+                    <label class="gls-btn gls-btn-sm gls-btn-secondary" for="adminThemeAutumn">가을</label>
+
+                    <input type="radio" class="gls-seg-input" name="adminTheme" id="adminThemeWinter" value="winter">
+                    <label class="gls-btn gls-btn-sm gls-btn-secondary" for="adminThemeWinter">겨울</label>
+                  </div>
+                  <div class="gls-flex gls-flex-col gls-lg-flex-row gls-lg-items-center gls-gap-2">
+                    <button type="button" class="gls-btn gls-btn-primary gls-btn-sm" id="applyThemeBtn">적용</button>
+                    <div class="admin-theme-preview gls-text-muted gls-text-small">현재 테마: 겨울</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-panel" id="usersTab">
+              <div class="admin-panel card glass-card gls-mb-4">
+                <div class="card-body">
+                  <div class="gls-flex gls-flex-wrap gls-gap-2 gls-items-center gls-justify-between gls-mb-3 sticky-admin-toolbar">
+                    <div>
+                      <h3 class="gls-mb-0">회원 관리</h3>
+                      <p class="gls-text-muted gls-text-small gls-mb-0">검색·정렬·필터로 회원을 관리하세요.</p>
+                    </div>
+                    <div class="admin-filter-group" id="adminUsersFilters"></div>
+                  </div>
+                  <div id="adminUsers">
+                    <p class="gls-text-muted">회원 목록을 불러오는 중입니다...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-panel gls-hidden" id="postsTab">
+              <div class="admin-panel card glass-card gls-mb-4">
+                <div class="card-body">
+                  <div class="gls-flex gls-flex-wrap gls-gap-2 gls-items-center gls-justify-between gls-mb-3 sticky-admin-toolbar">
+                    <div>
+                      <h3 class="gls-mb-0">글 관리</h3>
+                      <p class="gls-text-muted gls-text-small gls-mb-0">검색·필터 후 글을 미리보기하고 삭제하세요.</p>
+                    </div>
+                    <div class="admin-filter-group" id="adminPostsFilters"></div>
+                  </div>
+                  <div id="adminPosts">
+                    <p class="gls-text-muted">글 목록을 불러오는 중입니다...</p>
+                  </div>
+                </div>
+              </div>
+              <div id="postPreviewDrawer" class="post-preview drawer gls-hidden"></div>
+              <div id="adminPostModal" class="admin-modal gls-hidden" role="dialog" aria-modal="true">
+                <div class="admin-modal__overlay" data-dismiss="adminPostModal"></div>
+                <div class="admin-modal__dialog glass-card">
+                  <div class="admin-modal__header">
+                    <div>
+                      <p class="gls-text-muted gls-text-small gls-mb-1">글 미리보기</p>
+                      <h5 id="adminPostModalTitle" class="gls-mb-0"></h5>
+                      <div id="adminPostModalMeta" class="gls-text-muted gls-text-small"></div>
+                    </div>
+                    <button class="gls-modal-close" type="button" data-dismiss="adminPostModal" aria-label="닫기"></button>
+                  </div>
+                  <div id="adminPostModalBody" class="admin-modal__body"></div>
+                  <div class="admin-modal__footer gls-flex gls-justify-end gls-gap-2">
+                    <button class="gls-btn gls-btn-secondary gls-btn-sm" type="button" data-dismiss="adminPostModal">닫기</button>
+                    <button class="gls-btn gls-btn-danger gls-btn-sm" type="button" id="adminPostModalDelete">이 글 삭제</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="tab-panel gls-hidden" id="questsTab">
+              <div class="admin-panel card glass-card gls-mb-4">
+                <div class="card-body">
+                  <div class="gls-flex gls-flex-wrap gls-gap-2 gls-items-center gls-justify-between gls-mb-3 sticky-admin-toolbar">
+                    <div>
+                      <h3 class="gls-mb-0">퀘스트 템플릿</h3>
+                      <p class="gls-text-muted gls-text-small gls-mb-0">조건·보상 기반 템플릿을 관리합니다.</p>
+                    </div>
+                    <div class="gls-flex gls-gap-2">
+                      <button class="gls-btn gls-btn-secondary gls-btn-sm" id="achievementBackfillBtn">업적 전체 유저 부여</button>
+                      <button class="gls-btn gls-btn-secondary gls-btn-sm" id="addTemplateBtn">새 템플릿</button>
+                    </div>
+                  </div>
+                  <div id="questTemplates">
+                    <p class="gls-text-muted">템플릿을 불러오는 중입니다...</p>
+                  </div>
+                </div>
+              </div>
+              <div class="admin-panel card glass-card">
+                <div class="card-body">
+                  <div class="gls-flex gls-flex-wrap gls-gap-2 gls-items-center gls-justify-between gls-mb-3 sticky-admin-toolbar">
+                    <div>
+                      <h3 class="gls-mb-0">캠페인 관리</h3>
+                      <p class="gls-text-muted gls-text-small gls-mb-0">활성 캠페인과 기간을 설정합니다.</p>
+                    </div>
+                    <button class="gls-btn gls-btn-secondary gls-btn-sm" id="addCampaignBtn">새 캠페인</button>
+                  </div>
+                  <div id="questCampaigns">
+                    <p class="gls-text-muted">캠페인을 불러오는 중입니다...</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 공통 푸터 -->
+  <footer class="custom-footer">
+    <div class="gls-container">
+      <div class="gls-flex gls-flex-col gls-gap-2 gls-md-flex-row gls-justify-between gls-items-center">
+        <div class="gls-text-center gls-text-md-start">
+          <div class="footer-brand">글숲</div>
+          <p class="footer-subtitle gls-mb-0">마음을 나누는 작은 숲</p>
+        </div>
+        <div class="gls-text-center gls-text-md-end footer-meta">
+          <p class="footer-copy gls-mb-1">조용히 머물다 가는 공간을 함께 가꿔요.</p>
+          <p class="footer-small gls-mb-0">&copy; 2025 글숲</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+
+  <!-- 공통 유틸 JS (escapeHtml, maskEmail 등) -->
+  <script src="/js/utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- 헤더 로그인/로그아웃 상태 업데이트 스크립트 -->
+  <!-- admin.html이 /html 안에 있으므로 ../js/header.js 경로 사용 -->
+  <script src="../js/theme.js" defer></script>
+  <script src="../js/header.js"></script>
+
+  <!-- 관리자 페이지 전용 스크립트 (관리자 권한 체크 + 유저/글 관리) -->
+  <script src="../js/admin.js"></script>
+</body>
+</html>

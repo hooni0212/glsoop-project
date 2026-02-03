@@ -1,0 +1,348 @@
+/* =========================
+   spring-theme.css
+   - body.spring-theme 가 있을 때만 적용
+========================= */
+
+/* 0. 전체 배경 & 기본 텍스트 */
+body.spring-theme {
+  color: #34343A;
+
+  /* 작가/카드 공통 변수 (봄톤) */
+  --author-surface: rgba(255, 247, 250, 0.65);
+  --author-card-bg: rgba(255, 250, 252, 0.96);
+  --author-card-shadow: 0 12px 32px rgba(206, 118, 146, 0.14);
+  --author-card-shadow-compact: 0 8px 18px rgba(206, 118, 146, 0.1);
+  --author-text-muted: #735861;
+  --author-divider: rgba(184, 107, 133, 0.16);
+  --author-accent: #b86b85;
+  --gls-action-accent: #b86b85;
+  --gls-action-border: rgba(184, 107, 133, 0.2);
+  --gls-action-border-strong: rgba(184, 107, 133, 0.32);
+  --gls-action-surface: rgba(255, 250, 252, 0.92);
+  --gls-action-surface-strong: rgba(184, 107, 133, 0.08);
+  --gls-action-glow: 0 10px 26px rgba(184, 107, 133, 0.16);
+  --gls-account-surface: color-mix(in srgb, #fff5f8 88%, rgba(184, 107, 133, 0.12));
+  --gls-account-menu-surface: color-mix(in srgb, rgba(255, 250, 252, 0.94) 82%, rgba(184, 107, 133, 0.08));
+  --gls-account-border: color-mix(in srgb, rgba(184, 107, 133, 0.26) 65%, rgba(255, 255, 255, 0.38));
+  --gls-account-menu-border: color-mix(in srgb, rgba(184, 107, 133, 0.24) 70%, rgba(255, 255, 255, 0.36));
+  --gls-account-text: color-mix(in srgb, #4a2b36 62%, #fff6fa 38%);
+  --gls-account-muted: color-mix(in srgb, #734f5b 70%, rgba(255, 230, 240, 0.74));
+  --gls-account-avatar: color-mix(in srgb, #b86b85 62%, #ffeef6 38%);
+  --gls-account-shadow: 0 8px 20px rgba(184, 107, 133, 0.18);
+  --gls-account-shadow-hover: 0 12px 26px rgba(184, 107, 133, 0.2);
+  --gls-account-menu-shadow: 0 10px 24px rgba(104, 58, 71, 0.16);
+
+  /* 배경 레이어 (겨울 구조 그대로, 색만 봄톤으로) */
+  background-image:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.25) 0, transparent 60%),
+    radial-gradient(circle at 80% 15%, rgba(255,255,255,0.18) 0, transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(255,255,255,0.16) 0, transparent 60%),
+    url('/img/snowingtree.jpg'),
+    radial-gradient(circle at top,
+      #FFF5F8 0%,
+      #FFE9F0 40%,
+      #FFF7FA 75%,
+      #FDECF5 100%
+    );
+
+  /* 각 레이어 반복 방식 */
+  background-repeat:
+    no-repeat,
+    no-repeat,
+    no-repeat,
+    repeat-x,     /* 나무 이미지는 가로 방향 타일 */
+    no-repeat;
+
+  /* 각 레이어 위치 */
+  background-position:
+    10% 20%,        /* 위쪽 왼쪽 하이라이트 */
+    80% 15%,        /* 위쪽 오른쪽 하이라이트 */
+    50% 80%,        /* 아래쪽 중앙 하이라이트 */
+    bottom center,  /* 나무는 아래쪽에서 시작 */
+    top center;     /* 하늘 그라디언트 */
+
+  /* 각 레이어 크기 */
+  background-size:
+    auto,
+    auto,
+    auto,
+    auto 100vh,     /* 나무 높이 (원하면 50~60vh로 조절 가능) */
+    cover;
+
+  background-attachment: fixed; /* 스크롤해도 배경 고정 */
+}
+
+/* =========================
+   0-1. 안개/질감 레이어 (봄톤)
+========================= */
+
+/* 살짝 흐린 안개/빛 레이어 */
+body.spring-theme::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 10% 20%, rgba(255,255,255,0.35) 0, transparent 60%),
+    radial-gradient(circle at 80% 15%, rgba(255,245,248,0.28) 0, transparent 55%),
+    radial-gradient(circle at 50% 80%, rgba(255,240,245,0.25) 0, transparent 60%);
+}
+
+/* 봄 느낌의 부드러운 질감 레이어 */
+body.spring-theme::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  background-image:
+    radial-gradient(rgba(255, 255, 255, 0.4) 0.6px, transparent 0.6px),
+    radial-gradient(rgba(255, 182, 193, 0.08) 0.8px, transparent 0.8px),
+    radial-gradient(rgba(255, 255, 255, 0.25) 1px, transparent 1px);
+  background-size: 120px 120px, 90px 90px, 50px 50px;
+  mix-blend-mode: screen;
+  opacity: 0.5;
+}
+
+/* =========================
+   1. 네비게이션 바 & 푸터
+========================= */
+
+body.spring-theme .custom-navbar {
+  /* 벚꽃 분홍 + 연두 그라디언트 (차분톤) */
+  background: linear-gradient(90deg, #f6cadd, #a5d7a3);
+  box-shadow: 0 6px 18px rgba(184, 107, 133, 0.28);
+}
+
+/* 네비 브랜드 글씨: 봄 느낌 분홍빛 그라디언트 */
+body.spring-theme .custom-navbar .navbar-brand {
+  background: linear-gradient(120deg, #FFF5F8, #FFE4EE);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 푸터 토큰 */
+body.spring-theme {
+  --gls-footer-bg: linear-gradient(90deg, #f6cadd, #a5d7a3);
+  --gls-footer-text: #FFFDFE;
+  --gls-footer-border: rgba(255, 255, 255, 0.2);
+  --gls-footer-shadow: 0 6px 18px rgba(184, 107, 133, 0.28);
+  --gls-footer-link: #FFFDFE;
+}
+
+/* 피드 탭 & 저장 버튼 테마 매핑 */
+body.spring-theme .feed-tabs .feed-tab {
+  color: #b86b85;
+  border-color: rgba(184, 107, 133, 0.22);
+  background: rgba(184, 107, 133, 0.08);
+}
+
+body.spring-theme .feed-tabs .feed-tab.feed-tab-active,
+body.spring-theme .feed-tabs .feed-tab.active {
+  background: #b86b85;
+  border-color: #b86b85;
+  color: #fff;
+}
+
+body.spring-theme .nav-category-item:hover,
+body.spring-theme .nav-category-item:focus-visible {
+  background: rgba(184, 107, 133, 0.12);
+  color: #9f566e;
+}
+
+body.spring-theme .post-category-label {
+  background: rgba(184, 107, 133, 0.08);
+  border-color: rgba(184, 107, 133, 0.24);
+  color: #9f566e;
+}
+
+body.spring-theme .gls-save-btn {
+  color: #b86b85;
+  border-color: #b86b85;
+}
+
+body.spring-theme .gls-save-btn:hover,
+body.spring-theme .gls-save-btn:focus-visible {
+  background: rgba(184, 107, 133, 0.12);
+  color: #b86b85;
+  border-color: #b86b85;
+}
+
+/* =========================
+   2. 히어로 섹션
+========================= */
+
+/* 히어로 섹션: 아주 옅은 분홍 배경 */
+body.spring-theme .hero-section {
+  background: radial-gradient(
+    circle at top,
+    #FFFDFE 0%,
+    #FFF3F6 40%,
+    #FFF9F9 100%
+  );
+}
+
+/* 히어로 카드: 따뜻한 종이 느낌 */
+body.spring-theme .hero-card {
+  background: var(--gls-glass-bg-strong);
+  border: 1px solid var(--gls-glass-border);
+  backdrop-filter: blur(var(--gls-glass-blur));
+  -webkit-backdrop-filter: blur(var(--gls-glass-blur));
+  box-shadow: 0 18px 42px rgba(184, 107, 133, 0.2);
+  border-radius: 1.4rem;
+}
+
+
+body.spring-theme .hero-title {
+  color: #b86b85; /* 메인 타이틀 분홍 (톤 다운) */
+}
+
+body.spring-theme .hero-subtitle {
+  color: #6b8c5e; /* 연두 톤 글자 (차분) */
+}
+
+/* =========================
+   3. 버튼 (CTA, success 공통)
+========================= */
+
+body.spring-theme .hero-card .hero-cta-btn {
+  background-color: #7fbf78;
+  box-shadow: 0 10px 24px rgba(127, 191, 120, 0.32);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+body.spring-theme .hero-card .hero-cta-btn:hover,
+body.spring-theme .hero-card .hero-cta-btn:focus-visible {
+  background-color: #71ad6d;
+  box-shadow: 0 18px 42px rgba(127, 191, 120, 0.42);
+  color: #ffffff;
+  text-decoration: none;
+}
+
+/* 공통 버튼 (success / outline-success) 봄톤 */
+body.spring-theme .btn-success {
+  color: #71ad6d;
+  background-color: transparent;
+  border: 1px solid rgba(127, 191, 120, 0.68);
+  box-shadow: 0 10px 24px rgba(127, 191, 120, 0.24);
+}
+
+body.spring-theme .btn-success:hover,
+body.spring-theme .btn-success:focus-visible,
+body.spring-theme .btn-success.active,
+body.spring-theme .btn-success:active {
+  color: #ffffff;
+  background-color: #7fbf78;
+  border-color: #7fbf78;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(127, 191, 120, 0.3);
+}
+
+body.spring-theme .gls-btn-secondary {
+  color: #71ad6d;
+  border-color: rgba(127, 191, 120, 0.62);
+  background-color: transparent;
+  box-shadow: 0 8px 18px rgba(127, 191, 120, 0.18);
+}
+
+body.spring-theme .gls-btn-secondary:hover,
+body.spring-theme .gls-btn-secondary:focus-visible,
+body.spring-theme .gls-btn-secondary.active,
+body.spring-theme .gls-btn-secondary:active {
+  color: #ffffff;
+  background-color: #7fbf78;
+  border-color: #7fbf78;
+  box-shadow: 0 12px 28px rgba(127, 191, 120, 0.28);
+}
+
+/* =========================
+   4. 메인 카드 (quote-card / card)
+========================= */
+
+/* 인스타 감성 카드 */
+body.spring-theme .quote-card {
+  background-color: #FFF7FA; /* 연한 핑크 종이 */
+  background-image: none;
+  color: #34343A;
+  box-shadow: 0 10px 24px rgba(184, 107, 133, 0.16);
+}
+
+/* 메인 카드(피드/포스트) */
+body.spring-theme .card {
+  box-shadow: 0 10px 24px rgba(184, 107, 133, 0.12);
+}
+
+/* =========================
+   5. 작성자 뱃지 / 해시태그
+========================= */
+
+body.spring-theme .gls-author-badge {
+  background-color: #FFEAF1 !important;
+  border-color: #F3CDDB !important;
+  color: #b86b85 !important;
+}
+
+/* 카드/검색에서 사용되는 태그 버튼 */
+body.spring-theme .gls-tag-btn {
+  background-color: transparent;
+  border-color: #F3CDDB;
+  color: #b86b85;
+  box-shadow: none;
+}
+
+body.spring-theme .gls-tag-btn:hover,
+body.spring-theme .gls-tag-btn:focus-visible {
+  background-color: #FFE1EC;
+  border-color: #E8BCCF;
+  color: #9f566e;
+}
+
+/* 선택된 해시태그 칩 (작성/검색 영역) */
+body.spring-theme .hashtag-chip {
+  background-color: #FFEAF1;
+  color: #b86b85;
+  border: 1px solid #F3CDDB;
+}
+body.spring-theme .hashtag-chip .hashtag-chip-remove {
+  color: #b86b85;
+}
+body.spring-theme .hashtag-chip .hashtag-chip-remove:hover {
+  color: #9f566e;
+}
+
+/* 상단 "적용 중인 태그" 필터 바 배지 */
+.page-index.spring-theme #tagFilterBar .gls-chip {
+  background-color: #FFF3F6 !important;   /* 부드러운 봄 핑크 */
+  color: #b86b85 !important;              /* 메인 분홍 텍스트 */
+  border-radius: var(--gls-btn-radius);
+  border: 1px solid #F3CDDB;
+  padding: 0.35rem 0.7rem;
+  box-shadow: 0 2px 6px rgba(184, 107, 133, 0.16);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+/* 필터 바 안의 X 버튼(개별 태그 제거) 색 보정 */
+.page-index.spring-theme #tagFilterBar .gls-chip .tag-filter-remove {
+  filter: none;
+  opacity: 0.7;
+}
+.page-index.spring-theme #tagFilterBar .gls-chip .tag-filter-remove:hover {
+  opacity: 1;
+}
+
+/* =========================
+   6. 좋아요 하트
+========================= */
+
+body.spring-theme .like-btn .like-heart {
+  color: #9f566e;
+}
+
+body.spring-theme .like-btn.liked .like-heart {
+  color: #ef7d9a;
+}

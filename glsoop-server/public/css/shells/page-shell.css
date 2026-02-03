@@ -1,0 +1,775 @@
+/* =============================================================
+   서브 페이지 공통 레이아웃 (public/css/page-shell.css)
+   - 대상: 카테고리, 북마크, 마이페이지 등 메인/상세 외 페이지
+   - 목표: index/post의 유리 패널 감성을 다른 화면에도 공유
+   - 사용: body에 page-XXXX 클래스 + main.page-shell 구조
+   ============================================================= */
+
+/* =========================
+   1) 배경 / 기본 레이아웃
+========================= */
+
+body.page-category,
+body.page-bookmarks,
+body.page-mypage {
+  color: var(--gls-text);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.48), transparent 32%),
+    radial-gradient(circle at 82% 0%, rgba(255, 255, 255, 0.36), transparent 28%),
+    var(--gls-color-bg);
+}
+
+main.page-shell {
+  padding-top: calc(var(--gls-nav-height) + var(--gls-space-6));
+  padding-bottom: var(--gls-space-8);
+}
+
+.page-shell .gls-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gls-space-5, 20px);
+}
+
+/* =========================
+   2) 히어로 / 서브 헤더
+========================= */
+
+.page-hero-card {
+  padding: var(--gls-space-6, 24px);
+  border-radius: var(--gls-radius-lg, 18px);
+  border: 1px solid var(--gls-sub-border);
+  background: var(--gls-sub-surface);
+  box-shadow: var(--gls-sub-shadow);
+  backdrop-filter: blur(var(--gls-blur));
+  -webkit-backdrop-filter: blur(var(--gls-blur));
+  position: relative;
+  overflow: hidden;
+}
+
+.page-hero-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--gls-glass-inset);
+  pointer-events: none;
+}
+
+.page-hero-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gls-space-3, 12px);
+  align-items: center;
+}
+
+.page-hero-meta .eyebrow {
+  font-size: 0.85rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--gls-muted);
+  margin: 0;
+}
+
+.page-hero-meta .pill {
+  padding: 8px 12px;
+  border-radius: var(--gls-radius-pill);
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid var(--gls-sub-border);
+  color: var(--gls-muted);
+  font-weight: 600;
+}
+
+.page-hero-card h2 {
+  margin: 0;
+  font-size: clamp(1.35rem, 3vw, 1.8rem);
+}
+
+.page-hero-card p {
+  margin: 6px 0 0;
+  color: var(--gls-muted);
+}
+
+/* =========================
+   3) 공통 패널/그리드
+========================= */
+
+.page-panel {
+  padding: var(--gls-space-5, 20px);
+  border-radius: var(--gls-radius-lg, 18px);
+  border: 1px solid var(--gls-sub-border);
+  background: var(--gls-sub-surface-strong);
+  box-shadow: var(--gls-sub-shadow);
+  backdrop-filter: blur(var(--gls-blur));
+  -webkit-backdrop-filter: blur(var(--gls-blur));
+  position: relative;
+}
+
+.page-panel::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--gls-glass-inset);
+  pointer-events: none;
+}
+
+.page-panel + .page-panel {
+  margin-top: var(--gls-space-4, 16px);
+}
+
+.page-grid-split {
+  display: grid;
+  gap: var(--gls-space-4, 16px);
+  align-items: start;
+}
+
+@media (min-width: 992px) {
+  .page-grid-split {
+    grid-template-columns: minmax(280px, 340px) 1fr;
+  }
+}
+
+/* =========================
+   4) 카테고리 페이지 보정
+========================= */
+
+body.page-category #categoryFeed {
+  display: grid;
+  gap: var(--gls-space-4, 16px);
+}
+
+/* =========================
+   5) 북마크 페이지 보정
+========================= */
+
+body.page-bookmarks .bookmark-panel {
+  padding: var(--gls-space-4, 16px);
+  border-radius: var(--gls-radius-md, 14px);
+  border: 1px solid var(--gls-sub-border);
+  background: var(--gls-sub-surface-strong);
+  box-shadow: var(--gls-sub-shadow);
+  min-height: 320px;
+}
+
+body.page-bookmarks .bookmark-folder-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 10px;
+}
+
+body.page-bookmarks .bookmark-panel h5,
+body.page-bookmarks .bookmark-panel p,
+body.page-bookmarks .bookmark-panel div {
+  margin-bottom: 0;
+}
+
+/* =========================
+   6) 마이페이지 보정
+========================= */
+
+body.page-mypage .mypage-section-header {
+  align-items: center;
+}
+
+body.page-mypage .mypage-panels {
+  display: grid;
+  gap: var(--gls-space-4, 16px);
+}
+
+body.page-mypage .mypage-card {
+  padding: var(--gls-space-5, 20px);
+  border-radius: var(--gls-radius-lg, 18px);
+  border: 1px solid var(--gls-sub-border);
+  background: var(--gls-sub-surface-strong);
+  box-shadow: var(--gls-sub-shadow);
+  backdrop-filter: blur(var(--gls-blur));
+  -webkit-backdrop-filter: blur(var(--gls-blur));
+  position: relative;
+}
+
+body.page-mypage .mypage-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--gls-glass-inset);
+  pointer-events: none;
+}
+
+body.page-mypage .mypage-section + .mypage-section {
+  margin-top: var(--gls-space-4, 16px);
+}
+
+body.page-mypage .mypage-growth-mini {
+  margin: 0;
+}
+
+@media (max-width: 576px) {
+  .page-hero-card {
+    padding: var(--gls-space-5, 20px);
+  }
+
+  main.page-shell {
+    padding-top: calc(var(--gls-nav-height) + var(--gls-space-4));
+    padding-bottom: var(--gls-space-6);
+  }
+}
+
+/* =========================
+   Navbar scoped actions (theme-aware)
+   - Not a button owner. Context override for nav only.
+========================= */
+
+
+body[class*='-theme'] .custom-navbar .gls-btn,
+body[class*='-theme'] .navbar .gls-btn {
+  color: var(--gls-action-accent, #2e8b57);
+  border-color: var(--gls-action-border, rgba(30, 42, 51, 0.16));
+  background: var(--gls-action-surface, rgba(255, 255, 255, 0.82));
+  box-shadow: var(--gls-action-glow, 0 10px 26px rgba(46, 139, 87, 0.16));
+  transition: transform 0.15s ease, box-shadow 0.15s ease,
+    background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+body[class*='-theme'] .custom-navbar .gls-btn:hover,
+body[class*='-theme'] .custom-navbar .gls-btn:focus-visible,
+body[class*='-theme'] .navbar .gls-btn:hover,
+body[class*='-theme'] .navbar .gls-btn:focus-visible {
+  color: #0f172a;
+  background: var(--gls-action-surface-hover, rgba(255, 255, 255, 0.9));
+  border-color: var(--gls-action-border-strong, rgba(46, 139, 87, 0.3));
+  box-shadow: var(--gls-action-glow, 0 10px 26px rgba(46, 139, 87, 0.16));
+  transform: translateY(-1px);
+}
+
+
+/*==========================
+    Header / Navbar (site chrome)
+===========================*/
+/* =========================
+   2. 네비게이션 바
+========================= */
+
+/* 상단 네비 전체 배경
+   - 기본값은 spring(그린) 톤
+   - 테마는 --gls-header-gradient 만 덮어쓰면 됨
+*/
+.custom-navbar {
+  background: var(--gls-header-gradient, linear-gradient(90deg, #2e8b57, #3ca66c));
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* 헤더 로고 "글숲" */
+.custom-navbar .navbar-brand {
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 2.1rem;
+  letter-spacing: 0.08em;
+  line-height: 1;
+
+  /* 🟢 기본 로고 그라디언트 (테마에서 변수로 덮어쓰기 가능) */
+  background: var(--gls-navbar-brand-gradient, linear-gradient(120deg, #f8fff9, #ecfff4));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* 모바일에서 로고 크기 약간 축소 */
+@media (max-width: 576px) {
+  .custom-navbar .navbar-brand {
+    font-size: 1.8rem;
+  }
+}
+
+/* 네비게이션 링크 */
+.navbar-nav .nav-link {
+  font-weight: 500;
+  opacity: 0.92;
+  transition: opacity 0.15s ease-out, transform 0.15s ease-out;
+}
+
+.navbar-nav .nav-link:hover {
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+/* Bootstrap 제거 대비: 모바일 네비 토글( collapse ) 기본 동작 */
+.navbar-toggler {
+  appearance: none;
+  -webkit-appearance: none;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.08);
+  color: #fff;
+  border-radius: 12px;
+  padding: 0.5rem 0.65rem;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.navbar-toggler:focus-visible {
+  outline: 2px solid rgba(255, 255, 255, 0.65);
+  outline-offset: 2px;
+}
+
+/* 기본 아이콘(bootstrap 없이도 보이게) */
+.navbar-toggler-icon {
+  width: 22px;
+  height: 14px;
+  display: inline-block;
+  background: linear-gradient(currentColor, currentColor) 0 0 / 100% 2px no-repeat,
+    linear-gradient(currentColor, currentColor) 0 50% / 100% 2px no-repeat,
+    linear-gradient(currentColor, currentColor) 0 100% / 100% 2px no-repeat;
+  opacity: 0.95;
+}
+
+@media (min-width: 992px) {
+  .navbar-toggler {
+    display: none;
+  }
+}
+
+@media (max-width: 991.98px) {
+  /* navbarNav: 기본은 숨김, is-open/show에서 표시 */
+  #navbarNav {
+    display: none;
+    width: 100%;
+    margin-top: 0.75rem;
+  }
+
+  #navbarNav.is-open,
+  #navbarNav.show {
+    display: block;
+  }
+
+  #navbarNav .navbar-nav {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  #navbarNav .nav-link {
+    padding: 0.55rem 0.75rem;
+  }
+}
+
+@media (min-width: 992px) {
+  #navbarNav {
+    display: flex;
+    flex: 1 1 auto;
+    align-items: center;
+  }
+}
+
+/* Bootstrap dropdown 제거 대비: .dropdown.is-open 으로 메뉴 제어 */
+.dropdown-menu {
+  display: none;
+}
+
+.dropdown.is-open > .dropdown-menu {
+  display: block;
+}
+
+@media (min-width: 992px) {
+  .navbar .dropdown {
+    position: relative;
+  }
+
+  .navbar .dropdown-menu {
+    position: absolute;
+    left: 0;
+    top: calc(100% + 0.35rem);
+    z-index: 1000;
+    min-width: 12rem;
+  }
+}
+
+/* 계정 Pill + 팝오버 메뉴 */
+.nav-account-pill {
+  margin-left: 0.75rem;
+}
+
+.account-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gls-account-gap);
+  padding: var(--gls-account-padding-y) var(--gls-account-padding-x);
+  border-radius: var(--gls-account-radius);
+  border: 1px solid var(--gls-account-border);
+  background: var(--gls-account-surface);
+  box-shadow: var(--gls-account-shadow);
+  color: var(--gls-account-text);
+  cursor: pointer;
+  transition: box-shadow 0.18s ease, border-color 0.18s ease, background-color 0.18s ease;
+  backdrop-filter: blur(var(--gls-glass-blur, 10px));
+  -webkit-backdrop-filter: blur(var(--gls-glass-blur, 10px));
+}
+
+.account-trigger:hover,
+.account-trigger:focus-visible {
+  background: color-mix(in srgb, var(--gls-account-surface) 82%, rgba(255, 255, 255, 0.22));
+  box-shadow: var(--gls-account-shadow-hover);
+  border-color: color-mix(in srgb, var(--gls-account-border) 78%, rgba(46, 139, 87, 0.18));
+  outline: none;
+}
+
+.account-trigger:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--gls-action-accent, #2e8b57) 32%, rgba(255, 255, 255, 0.72));
+  outline-offset: 2px;
+}
+
+.account-avatar,
+.mobile-avatar {
+  width: var(--gls-account-avatar-size);
+  height: var(--gls-account-avatar-size);
+  border-radius: 50%;
+  background: radial-gradient(circle at 32% 28%, rgba(255, 255, 255, 0.92), var(--gls-account-avatar));
+  color: color-mix(in srgb, var(--gls-color-text, #1f2a2b) 72%, #0f2a1d 28%);
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5), 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.account-avatar[data-has-emoji='true'],
+.mobile-avatar[data-has-emoji='true'] {
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+.account-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  line-height: 1.2;
+  gap: 2px;
+}
+
+.account-name {
+  font-weight: 700;
+  font-size: 0.98rem;
+  color: var(--gls-account-text);
+  white-space: nowrap;
+}
+
+.account-subtitle {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.account-caret {
+  font-size: 0.8rem;
+  color: var(--gls-account-muted);
+}
+
+.account-menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + var(--gls-account-menu-gap));
+  min-width: 220px;
+  max-width: min(320px, calc(100vw - 24px));
+  background: var(--gls-account-menu-surface);
+  border: 1px solid var(--gls-account-menu-border);
+  border-radius: var(--gls-account-menu-radius);
+  box-shadow: var(--gls-account-menu-shadow);
+  backdrop-filter: blur(var(--gls-glass-blur, 12px));
+  -webkit-backdrop-filter: blur(var(--gls-glass-blur, 12px));
+  padding: 6px;
+  z-index: 1060;
+  transform-origin: top right;
+}
+
+.account-menu[hidden] {
+  display: none;
+}
+
+.account-menu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.account-menu-item {
+  display: block;
+  width: 100%;
+  border: none;
+  background: color-mix(in srgb, var(--gls-glass-bg-subtle, rgba(255, 255, 255, 0.18)) 60%, transparent);
+  color: color-mix(in srgb, var(--gls-account-text) 92%, var(--gls-color-text, #1f2a2b) 8%);
+  text-decoration: none;
+  text-align: left;
+  padding: 0 14px;
+  height: var(--gls-account-item-height);
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--gls-account-item-radius);
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.account-menu-item:hover,
+.account-menu-item:focus-visible {
+  background: color-mix(in srgb, var(--gls-glass-bg, rgba(255, 255, 255, 0.28)) 72%, transparent);
+  color: var(--gls-account-text);
+  outline: none;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.18) inset;
+}
+
+.account-menu-logout {
+  color: color-mix(in srgb, var(--gls-color-text, #1f2a2b) 92%, #c07a7a 8%);
+}
+
+.account-menu-divider {
+  border: none;
+  border-top: 1px solid color-mix(in srgb, var(--gls-account-menu-border) 86%, transparent);
+  margin: 10px 4px 6px;
+}
+
+.mobile-account-chip {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 10px;
+  border: 1px solid var(--gls-account-menu-border);
+  border-radius: var(--gls-account-radius);
+  background: color-mix(in srgb, var(--gls-glass-bg, rgba(255, 255, 255, 0.28)) 82%, transparent);
+}
+
+.mobile-account-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.2;
+  gap: 2px;
+}
+
+.mobile-account-label {
+  font-size: 0.82rem;
+  color: color-mix(in srgb, var(--gls-account-muted), rgba(0, 0, 0, 0.12));
+}
+
+.mobile-account-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--gls-account-text, var(--gls-color-text, #1f2a2b));
+}
+
+.mobile-menu-divider {
+  margin: 0.35rem 0;
+}
+
+.nav-link-compact {
+  padding: 0.8rem 1rem !important;
+  min-height: var(--gls-account-item-height);
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--gls-account-item-radius);
+  color: var(--gls-color-text, #1f2a2b);
+  background: transparent;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.nav-logout-link {
+  color: color-mix(in srgb, var(--gls-color-text, #1f2a2b) 92%, #7a3f44 8%);
+  font-weight: 600;
+  padding: 0.8rem 1rem;
+}
+
+.nav-logout-link:hover,
+.nav-logout-link:focus-visible {
+  background: color-mix(in srgb, var(--gls-glass-bg-subtle, rgba(255, 255, 255, 0.18)) 90%, transparent);
+  color: color-mix(in srgb, var(--gls-color-text, #1f2a2b) 82%, #a63c45 18%);
+  outline: none;
+}
+
+.navbar-nav .nav-link.nav-link-compact:hover,
+.navbar-nav .nav-link.nav-link-compact:focus-visible {
+  background: color-mix(in srgb, var(--gls-glass-bg-subtle, rgba(255, 255, 255, 0.18)) 80%, transparent);
+  color: var(--gls-color-text, #1f2a2b);
+}
+
+.navbar-nav .nav-link.nav-link-compact.active {
+  background: color-mix(in srgb, var(--gls-glass-bg, rgba(255, 255, 255, 0.28)) 70%, transparent);
+  color: var(--gls-color-text, #1f2a2b);
+  font-weight: 700;
+}
+
+@media (min-width: 992px) {
+  .custom-navbar :where(.gls-container, .container) {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .custom-navbar .navbar-collapse {
+    display: flex !important;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: nowrap;
+    gap: 1rem;
+  }
+
+  .custom-navbar .navbar-nav {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
+    width: auto;
+  }
+
+  .category-dropdown-nav {
+    margin-top: 0;
+  }
+}
+
+@media (max-width: 991.98px) {
+  .navbar-nav .nav-link.nav-link-compact,
+  .navbar-nav .nav-link.nav-link-compact:hover,
+  .navbar-nav .nav-link.nav-link-compact:focus-visible,
+  .nav-logout-link,
+  .nav-logout-link:hover,
+  .nav-logout-link:focus-visible,
+  .mobile-account-label,
+  .mobile-account-name {
+    color: #fff;
+  }
+
+  .navbar-nav .nav-link.nav-link-compact,
+  .nav-logout-link {
+    background: transparent;
+  }
+
+  .navbar-nav .nav-link.nav-link-compact:hover,
+  .navbar-nav .nav-link.nav-link-compact:focus-visible,
+  .nav-logout-link:hover,
+  .nav-logout-link:focus-visible {
+    background: color-mix(in srgb, rgba(255, 255, 255, 0.18) 80%, transparent);
+  }
+}
+
+.category-dropdown-nav .dropdown-menu {
+  border-radius: 12px;
+  padding: 0.5rem 0;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.15);
+  min-width: 12rem;
+}
+
+.category-dropdown-nav .dropdown-item {
+  font-weight: 500;
+  padding: 0.55rem 1rem;
+}
+
+.category-dropdown-nav .dropdown-item:active,
+.category-dropdown-nav .dropdown-item:focus,
+.category-dropdown-nav .dropdown-item:hover {
+  background-color: rgba(46, 139, 87, 0.12);
+}
+
+@media (max-width: 991px) {
+  .category-dropdown-nav {
+    margin-top: 0.5rem;
+  }
+
+  .category-dropdown-nav .dropdown-menu {
+    box-shadow: none;
+  }
+}
+
+.navbar .btn {
+  border-radius: var(--gls-radius-pill);
+  font-size: 0.9rem;
+  padding: 0.35rem 0.9rem;
+}
+
+/* =========================
+   14. 공통 푸터
+========================= */
+
+.custom-footer {
+  background: var(--gls-footer-bg, linear-gradient(90deg, #2e8b57, #3ca66c));
+  color: var(--gls-footer-text, #fdfdfd);
+  margin-top: auto;
+  box-shadow: var(--gls-footer-shadow, 0 -4px 12px rgba(0, 0, 0, 0.06));
+  border-top: 1px solid var(--gls-footer-border, rgba(255, 255, 255, 0.12));
+  padding: 0.65rem 0;
+}
+
+.custom-footer :where(.gls-container, .container) {
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+}
+
+.custom-footer .row {
+  row-gap: 0.35rem;
+}
+
+.footer-brand {
+  font-family: 'Nanum Pen Script', cursive;
+  font-size: 1.55rem;
+  letter-spacing: 0.01em;
+}
+
+.footer-subtitle {
+  font-size: 0.9rem;
+  opacity: 0.88;
+  margin-bottom: 0;
+}
+
+.footer-copy {
+  font-size: 0.82rem;
+  opacity: 0.9;
+  margin-bottom: 0;
+}
+
+.footer-small {
+  font-size: 0.76rem;
+  opacity: 0.85;
+  margin-bottom: 0;
+}
+
+.footer-meta p {
+  margin-bottom: 0;
+}
+
+.custom-footer .footer-links a {
+  color: var(--gls-footer-link, currentColor);
+}
+
+@media (max-width: 576px) {
+  .custom-footer {
+    text-align: center;
+    padding: 0.55rem 0;
+  }
+
+  .custom-footer :where(.gls-container, .container) {
+    padding-top: 0.55rem;
+    padding-bottom: 0.55rem;
+  }
+
+  .footer-brand {
+    font-size: 1.35rem;
+  }
+
+  .footer-subtitle {
+    font-size: 0.82rem;
+  }
+
+  .footer-copy {
+    font-size: 0.78rem;
+  }
+
+  .footer-small {
+    font-size: 0.72rem;
+  }
+}

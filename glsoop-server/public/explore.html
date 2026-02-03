@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!--
+    탐색/모든 글 보기(explore.html)
+    - 연동 CSS: base.css, components.css, main.css, 계절 테마(spring/summer/autumn/winter)
+    - 연동 JS: header.js(네비), index.js(피드/필터/CTA), postCard.js(카드 공통), utils.js
+    - 주요 영역: #heroSection(히어로), #feedPosts(피드 카드 컨테이너), #tagFilterBar(필터)
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta
+    name="description"
+    content="글을 쓰는 사람과 읽는 사람이 머무는 글숲에서 오늘의 생각과 감정을 기록하고 나눠보세요."
+  >
+  <link rel="canonical" href="https://glsoop.com/">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ko_KR">
+  <meta property="og:site_name" content="글숲">
+  <meta property="og:title" content="글숲 - 글을 쓰고 읽는 사람들의 숲">
+  <meta
+    property="og:description"
+    content="짧은 구절부터 일기, 시까지 마음을 나누는 글숲에서 영감과 연결을 찾아보세요."
+  >
+  <meta property="og:url" content="https://glsoop.com/">
+  <meta property="og:image" content="/img/snowingtree.jpg">
+  <meta property="og:image:alt" content="눈 내리는 숲길 위로 비치는 글숲 로고">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="글숲 - 글을 쓰고 읽는 사람들의 숲">
+  <meta
+    name="twitter:description"
+    content="오늘의 생각과 감정을 글숲에서 기록하고 공유하세요."
+  >
+  <meta name="twitter:image" content="/img/snowingtree.jpg">
+  <title>글숲 탐색</title>
+
+  <!-- Google Fonts: 손글씨체 / 본문용 고딕 / 감성 명조체 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+  href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700&display=swap"
+  rel="stylesheet"
+/>
+<link
+  href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap"
+  rel="stylesheet"
+/>
+
+
+  <!-- Bootstrap CSS (레이아웃 / 반응형 유틸) -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/app.css">
+  <!-- 계절별 배경 스타일 추가-->
+  <link rel="stylesheet" id="seasonTheme" href="/css/themes/winter-theme.css">
+
+</head>
+<body class="page-explore page-index winter-theme">
+  <!-- =========================
+       상단 네비게이션 / 헤더 영역
+       ========================= -->
+  <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top nav-height">
+    <div class="container gls-container">
+      <!-- 사이트 로고 / 브랜드 -->
+      <a class="navbar-brand" href="/index.html">글숲</a>
+
+      <!-- 모바일에서 메뉴 토글 버튼 -->
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <!-- 네비게이션 메뉴(로그인 전/후 상태에 따라 노출) -->
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav me-lg-3 category-dropdown-nav">
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="categoryDropdown"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              카테고리
+            </a>
+            <ul class="dropdown-menu nav-category-menu" aria-labelledby="categoryDropdown">
+              <li><a class="dropdown-item nav-category-item" href="/explore">전체</a></li>
+              <li>
+                <a class="dropdown-item nav-category-item" href="/html/category.html?category=poem">시</a>
+              </li>
+              <li>
+                <a class="dropdown-item nav-category-item" href="/html/category.html?category=essay">에세이/일기</a>
+              </li>
+              <li>
+                <a class="dropdown-item nav-category-item" href="/html/category.html?category=short">짧은 구절</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+
+        <!-- 로그인 전: 로그인 / 회원가입 버튼 -->
+        <ul class="navbar-nav ms-auto before-login">
+          <li class="nav-item">
+            <a class="nav-link" href="/html/login.html">로그인</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/html/signup.html">회원가입</a>
+          </li>
+        </ul>
+
+        <!-- 로그인 후: 유저 이름 + 마이페이지 / 글쓰기 / 로그아웃 버튼
+             - header.js의 updateHeader()에서 /api/me를 보고
+               .before-login / .after-login display를 토글 -->
+        <ul class="navbar-nav ms-auto after-login" style="display: none;">
+          <!-- 로그인된 사용자 이름 텍스트 (예: "재원님") -->
+          <li class="nav-item">
+            <span class="nav-link" id="navUserName"></span>
+          </li>
+
+          <!-- 마이페이지 이동 -->
+          <li class="nav-item">
+            <a class="nav-link" href="/html/mypage.html">마이페이지</a>
+          </li>
+
+
+          <!-- 글쓰기 페이지 이동 -->
+          <li class="nav-item">
+            <a class="nav-link" href="/html/editor.html">글쓰기</a>
+          </li>
+
+          <!-- 로그아웃 버튼 (header.js → handleLogout()) -->
+          <li class="nav-item">
+            <button
+              class="user-profile"
+              id="logoutBtn"
+              type="button"
+              aria-label="로그아웃"
+            >
+              <span class="user-profile-inner">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <g data-name="Layer 2" id="Layer_2">
+                    <path
+                      d="m15.626 11.769a6 6 0 1 0 -7.252 0 9.008 9.008 0 0 0 -5.374 8.231 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 9.008 9.008 0 0 0 -5.374-8.231zm-7.626-4.769a4 4 0 1 1 4 4 4 4 0 0 1 -4-4zm10 14h-12a1 1 0 0 1 -1-1 7 7 0 0 1 14 0 1 1 0 0 1 -1 1z"
+                    ></path>
+                  </g>
+                </svg>
+                <span class="user-profile-label">로그아웃</span>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- =========================
+       메인 히어로 섹션 (브랜드 소개)
+       ========================= -->
+  <section class="hero-section">
+    <div class="container gls-container">
+      <!-- 중앙 카드형 히어로 (main.css의 .hero-card 스타일 사용) -->
+      <div class="hero-card">
+        <h1 class="hero-title">글숲</h1>
+        <p class="hero-subtitle">
+          글을 쓰는 사람, 읽는 사람이 함께 머무는 작은 숲.<br />
+          오늘의 생각, 감정을 천천히 적어 내려가 보세요.
+        </p>
+
+        <a href="/html/editor.html" class="gls-btn gls-btn-primary hero-cta-btn">
+          <span class="hero-cta-text">바로 글 쓰러 가기</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================
+       피드 섹션: 모든 사용자의 글 목록
+       ========================= -->
+    <section class="page-section">
+      <div class="container gls-container">
+      <div class="gls-flex gls-flex-col gls-md-flex-row gls-gap-3 gls-md-items-center gls-mb-3">
+        <h3 class="gls-mb-0">피드</h3>
+        <div class="feed-tabs nav nav-pills" role="tablist">
+          <button
+            type="button"
+            class="nav-link feed-tab feed-tab-active"
+            data-feed-tab="latest"
+            data-sort="latest"
+            data-type="all"
+            aria-current="true"
+          >
+            최신
+          </button>
+          <button
+            type="button"
+            class="nav-link feed-tab"
+            data-feed-tab="popular"
+            data-sort="popular"
+            data-type="all"
+          >
+            인기
+          </button>
+          <button
+            type="button"
+            class="nav-link feed-tab"
+            data-feed-tab="following"
+            data-sort="latest"
+            data-type="following"
+          >
+            팔로잉
+          </button>
+        </div>
+      </div>
+
+      <!-- 홈 피드 카드들이 들어갈 영역
+           - 기본 상태: "피드를 불러오는 중입니다..." 안내 문구
+           - index.js(Glsoop.FeedPage)가 /api/posts/feed를 호출하여
+             카드들을 무한 스크롤 방식으로 추가 렌더링 -->
+      <div id="feedPosts">
+        <p class="gls-text-muted">피드를 불러오는 중입니다...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================
+       하단 푸터 영역
+       ========================= -->
+  <footer class="custom-footer">
+    <div class="container gls-container">
+      <div class="gls-flex gls-flex-col gls-gap-2 gls-md-flex-row gls-justify-between gls-items-center">
+        <div class="gls-text-center gls-text-md-start">
+          <div class="footer-brand">글숲</div>
+          <p class="footer-subtitle gls-mb-0">마음을 나누는 작은 숲</p>
+        </div>
+        <div class="gls-text-center gls-text-md-end footer-meta">
+          <p class="footer-copy gls-mb-1">조용히 머물다 가는 공간을 함께 가꿔요.</p>
+          <p class="footer-gls-text-small gls-mb-0">&copy; 2025 글숲</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================
+       JS 스크립트 로드
+       ========================= -->
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+
+  <!-- 공통 유틸 (escapeHtml, maskEmail, autoAdjustQuoteFont 등) -->
+  <script src="/js/utils.js"></script>
+
+  <!-- Bootstrap JS 번들 (팝오버, 모달, 네비 토글 등) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- 헤더 로그인 상태 관리 (before-login / after-login 토글, 로그아웃 처리) -->
+  <script src="/js/theme.js" defer></script>
+  <script src="./js/header.js"></script>
+
+  <script src="/js/postCard.js"></script>
+  <script src="/js/bookmarkModal.js"></script>
+  <!-- 메인 피드 로직
+       - Glsoop.FeedPage 모듈
+       - 무한 스크롤, 좋아요 토글, 태그 필터, 잎사귀 애니메이션 등 -->
+  <script src="./js/index.js"></script>
+
+  <script src="/js/seasonal.js" defer></script>
+</body>
+</html>

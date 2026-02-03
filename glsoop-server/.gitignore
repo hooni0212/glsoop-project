@@ -1,0 +1,65 @@
+# =========================
+# Node modules
+# =========================
+node_modules/
+
+# =========================
+# Environment variables
+# =========================
+.env
+*.env
+*.env.*
+!/.env.example
+
+# =========================
+# Logs / OS
+# =========================
+npm-debug.log
+.DS_Store
+._*
+
+# =========================
+# VS Code (개인용이면 통째로 무시 추천)
+# =========================
+.vscode/
+
+# =========================
+# SQLite (local / private)
+# =========================
+*.db
+*.db-*
+*.sqlite
+*.sqlite3
+*-wal
+*-shm
+*-journal
+
+# =========================
+# Local DB backups
+# =========================
+*.bak
+*.db.bak_*
+*.db.safe_*
+
+# =========================
+# data/ (DB / backups 폴더 전체 커밋 방지)
+# =========================
+data/**
+!data/.gitkeep
+
+# 패치 파일은 커밋하지 않습니다.
+*.patch
+
+# =========================
+# ui-kit 파일 커밋 방지
+# =========================
+/public/html/ui-kit.html
+/public/css/ui-kit.css
+/public/js/ui-kit.js
+
+# =========================
+# Playwright artifacts
+# =========================
+tmp/
+test-results/
+playwright-report/

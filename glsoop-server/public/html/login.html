@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <!--
+    로그인 페이지(login.html)
+    - 연동 CSS: base.css, components.css, login.css, 계절 테마(spring/summer/autumn/winter)
+    - 연동 JS: header.js(공통 네비 상태), login.js(폼 제출 처리)
+    - 폼 위치: #loginForm (이메일/비밀번호) → 성공 시 /html/mypage.html 이동
+  -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로그인 | 글숲</title>
+
+  <!-- Google Fonts: 사이트 공통 폰트 -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap"
+    rel="stylesheet"
+  >
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Bootstrap CSS: 레이아웃/폼/버튼 기본 스타일 -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+  <link rel="stylesheet" href="/css/app.css">
+
+</head>
+
+<!-- 🔽 전체를 세로 플렉스 + 화면 높이 채우기 (푸터를 항상 하단에 붙이기 위함) -->
+<body class="gls-flex gls-flex-col gls-min-vh-100 winter-theme page-login">
+  <!-- 헤더 네비게이션 바 -->
+  <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top nav-height">
+    <div class="gls-container">
+      <!-- 로고: 클릭 시 메인 홈으로 이동 -->
+      <a class="navbar-brand" href="/index.html">글숲</a>
+
+      <!-- 모바일 메뉴 토글 버튼 -->
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-gls-toggle="nav" aria-controls="navbarNav" aria-expanded="false"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav gls-me-lg-3 category-dropdown-nav">
+          <li class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              href="#"
+              id="categoryDropdown"
+              role="button"
+              data-gls-toggle="dropdown"
+              aria-expanded="false"
+            >
+              카테고리
+            </a>
+            <ul class="dropdown-menu nav-category-menu" aria-labelledby="categoryDropdown">
+              <li><a class="dropdown-item nav-category-item" href="/explore">전체</a></li>
+              <li><a class="dropdown-item nav-category-item" href="/html/category.html?category=poem">시</a></li>
+              <li><a class="dropdown-item nav-category-item" href="/html/category.html?category=essay">에세이/일기</a></li>
+              <li><a class="dropdown-item nav-category-item" href="/html/category.html?category=short">짧은 구절</a></li>
+            </ul>
+          </li>
+        </ul>
+        <!-- 로그인 전: 로그인 / 회원가입 메뉴 표시 -->
+        <ul class="navbar-nav gls-ms-auto before-login">
+          <li class="nav-item">
+            <a class="nav-link" href="/html/login.html">로그인</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/html/signup.html">회원가입</a>
+          </li>
+        </ul>
+
+        <!-- 로그인 후: 유저 이름 / 마이페이지 / 글쓰기 / 로그아웃 메뉴 표시 -->
+        <!-- header.js에서 /api/me 결과에 따라 before-login / after-login 토글 -->
+        <ul class="navbar-nav gls-ms-auto after-login" style="display: none;">
+          <li class="nav-item">
+            <!-- 로그인한 유저 이름 표시 (예: 홍길동님) -->
+            <span class="nav-link" id="navUserName"></span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/html/mypage.html">마이페이지</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/html/editor.html">글쓰기</a>
+          </li>
+          <li class="nav-item">
+            <!-- 로그아웃 버튼: header.js에서 클릭 이벤트 처리 -->
+            <button
+              class="user-profile"
+              id="logoutBtn"
+              type="button"
+              aria-label="로그아웃"
+            >
+              <span class="user-profile-inner">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <g data-name="Layer 2" id="Layer_2">
+                    <path
+                      d="m15.626 11.769a6 6 0 1 0 -7.252 0 9.008 9.008 0 0 0 -5.374 8.231 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 9.008 9.008 0 0 0 -5.374-8.231zm-7.626-4.769a4 4 0 1 1 4 4 4 4 0 0 1 -4-4zm10 14h-12a1 1 0 0 1 -1-1 7 7 0 0 1 14 0 1 1 0 0 1 -1 1z"
+                    ></path>
+                  </g>
+                </svg>
+                <span class="user-profile-label">로그아웃</span>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- 로그인 섹션 -->
+  <!-- fixed-top 헤더와 겹치지 않도록 gls-py-5 + gls-mt-5로 상단 여백 확보 -->
+  <section class="gls-py-5 gls-mt-5 auth-hero gls-relative gls-overflow-hidden">
+    <div class="snowfall snowfall-near"></div>
+    <div class="snowfall snowfall-mid"></div>
+    <div class="snowfall snowfall-far"></div>
+    <div class="gls-container gls-relative">
+      <!-- 페이지 제목 -->
+      <div class="gls-text-center gls-mb-4">
+        <p class="auth-eyebrow gls-uppercase gls-mb-2">겨울 아카이브</p>
+        <h2 class="gls-fw-bold">로그인</h2>
+        <p class="gls-text-muted gls-text-small gls-mb-0">포근한 숲 속에서 계정을 열어보세요.</p>
+      </div>
+
+      <div class="auth-shell mx-auto">
+        <div class="auth-aside">
+          <span class="auth-chip">겨울 감성 유지 중</span>
+          <h3 class="gls-fw-bold gls-mt-3">잔잔한 설경 속에서<br class="gls-hidden gls-md-inline"> 글숲과 다시 연결돼요.</h3>
+          <p class="gls-text-muted gls-mt-2 gls-mb-3">
+            고요한 배경 위에 얇은 유리 패널을 더해, 눈 내리는 분위기를 해치지 않으면서도 또렷한 로그인 경험을 준비했어요.
+          </p>
+          <div class="auth-meta">
+            <div class="auth-pill">
+              <span class="auth-pill__label">오늘의 방문</span>
+              <strong>따스한 숲지기 1,240명</strong>
+            </div>
+            <div class="auth-pill">
+              <span class="auth-pill__label">보호된 공간</span>
+              <strong>암호화된 세션 &amp; 안전한 로그인</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- 로그인 폼: 가운데 정렬 + 최대 너비 440px -->
+        <form id="loginForm" class="auth-card" style="max-width: 480px;">
+          <div class="auth-card__header">
+            <div>
+              <p class="auth-eyebrow gls-uppercase gls-mb-1">Sign in</p>
+              <h4 class="gls-mb-0">계정으로 돌아오기</h4>
+            </div>
+            <a class="gls-btn gls-btn-sm gls-btn-secondary" href="/html/signup.html">회원가입</a>
+          </div>
+
+          <!-- 이메일 입력 -->
+          <div class="gls-mb-3">
+            <label class="gls-label">이메일</label>
+            <input
+              type="email"
+              name="email"
+              class="gls-input"
+              required
+              autofocus
+            >
+          </div>
+
+          <!-- 비밀번호 입력 -->
+          <div class="gls-mb-3">
+            <label class="gls-label">비밀번호</label>
+            <input
+              type="password"
+              name="pw"
+              class="gls-input"
+              required
+              autocomplete="current-password"
+            >
+          </div>
+
+          <!-- 로그인 버튼 -->
+          <!-- login.js에서 submit 이벤트를 잡아 /api/login 호출 -->
+          <button
+            type="submit"
+            class="gls-btn gls-btn-primary gls-btn-block"
+          >
+            로그인
+          </button>
+
+          <!-- 비밀번호 찾기 링크: forgot-password.html로 이동 -->
+          <div class="gls-spread gls-mt-3 gls-text-small">
+            <span class="gls-text-muted">안전한 접속을 위해 HTTPS를 사용해요.</span>
+            <a href="/html/forgot-password.html" class="gls-text-muted">
+              비밀번호를 잊으셨나요?
+            </a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 글숲 공통 푸터 -->
+  <!-- body에 flex-column + min-vh-100, 푸터에 mt-auto → 화면 하단에 고정 느낌 -->
+  <footer class="custom-footer gls-mt-auto">
+    <div class="gls-container">
+      <div class="gls-flex gls-flex-col gls-gap-2 gls-md-flex-row gls-justify-between gls-items-center">
+        <div class="gls-text-center gls-text-md-start">
+          <div class="footer-brand">글숲</div>
+          <p class="footer-subtitle gls-mb-0">마음을 나누는 작은 숲</p>
+        </div>
+        <div class="gls-text-center gls-text-md-end footer-meta">
+          <p class="footer-copy gls-mb-1">조용히 머물다 가는 공간을 함께 가꿔요.</p>
+          <p class="footer-small gls-mb-0">&copy; 2025 글숲</p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- JS -->
+
+  <!-- 유틸 함수 모음 (escapeHtml, maskEmail, 날짜 포맷, quote-card 폰트 조정 등) -->
+  <script src="/js/utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- 헤더 로그인 상태 처리 스크립트 (/api/me → before/after-login 토글, 로그아웃 처리) -->
+  <script src="../js/theme.js" defer></script>
+  <script src="../js/header.js"></script>
+
+  <!-- 로그인 처리 스크립트 (폼 submit → /api/login POST, 성공 시 마이페이지로 이동) -->
+  <script src="../js/login.js"></script>
+</body>
+</html>

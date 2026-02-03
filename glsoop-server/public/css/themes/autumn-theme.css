@@ -1,0 +1,229 @@
+/* =========================
+   autumn-theme.css
+   - body.autumn-theme 가 있을 때만 적용
+========================= */
+
+/* 0. 전체 배경 & 텍스트 */
+body.autumn-theme {
+  background-color: #FBF3E8; /* 따뜻한 베이지 */
+  color: #3B2A22;
+  --author-surface: rgba(251, 243, 232, 0.8);
+  --author-card-bg: rgba(255, 249, 240, 0.96);
+  --author-card-shadow: 0 12px 32px rgba(152, 96, 70, 0.16);
+  --author-card-shadow-compact: 0 8px 18px rgba(152, 96, 70, 0.12);
+  --author-text-muted: #705543;
+  --author-divider: rgba(152, 96, 70, 0.18);
+  --author-accent: #b77a4f;
+  --gls-action-accent: #b77a4f;
+  --gls-action-border: rgba(183, 122, 79, 0.24);
+  --gls-action-border-strong: rgba(183, 122, 79, 0.34);
+  --gls-action-surface: rgba(255, 249, 240, 0.92);
+  --gls-action-surface-strong: rgba(183, 122, 79, 0.08);
+  --gls-action-glow: 0 10px 26px rgba(183, 122, 79, 0.18);
+  --gls-account-surface: color-mix(in srgb, #fff7ef 88%, rgba(183, 122, 79, 0.12));
+  --gls-account-menu-surface: color-mix(in srgb, rgba(255, 249, 240, 0.94) 82%, rgba(183, 122, 79, 0.08));
+  --gls-account-border: color-mix(in srgb, rgba(183, 122, 79, 0.28) 65%, rgba(255, 255, 255, 0.36));
+  --gls-account-menu-border: color-mix(in srgb, rgba(183, 122, 79, 0.24) 70%, rgba(255, 255, 255, 0.34));
+  --gls-account-text: color-mix(in srgb, #3b271a 70%, #fff8f1 30%);
+  --gls-account-muted: color-mix(in srgb, #6d4a34 70%, rgba(255, 235, 217, 0.78));
+  --gls-account-avatar: color-mix(in srgb, #b77a4f 62%, #fff4e7 38%);
+  --gls-account-shadow: 0 8px 20px rgba(183, 122, 79, 0.18);
+  --gls-account-shadow-hover: 0 12px 26px rgba(183, 122, 79, 0.2);
+  --gls-account-menu-shadow: 0 10px 24px rgba(98, 60, 36, 0.16);
+}
+
+/* =========================
+   1. 네비게이션 바
+========================= */
+
+body.autumn-theme .custom-navbar {
+  background: linear-gradient(90deg, #d6a575, #a87052); /* 단풍 오렌지 + 브라운 (톤 다운) */
+  box-shadow: 0 6px 18px rgba(152, 96, 70, 0.32);
+}
+
+body.autumn-theme .custom-navbar .navbar-brand {
+  background: linear-gradient(120deg, #FFF7EC, #FCE2C4);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* =========================
+   2. 히어로 섹션
+========================= */
+
+body.autumn-theme .hero-section {
+  background: radial-gradient(
+    circle at top,
+    #FFF9F0 0%,
+    #FCEBD8 45%,
+    #FBF3E8 100%
+  );
+}
+
+body.autumn-theme .hero-card {
+  background: var(--gls-glass-bg-strong);
+  border: 1px solid var(--gls-glass-border);
+  backdrop-filter: blur(var(--gls-glass-blur));
+  -webkit-backdrop-filter: blur(var(--gls-glass-blur));
+  box-shadow: 0 18px 42px rgba(152, 96, 70, 0.22);
+  border-radius: 1.4rem;
+}
+
+
+body.autumn-theme .hero-title {
+  color: #a06445;
+}
+
+body.autumn-theme .hero-subtitle {
+  color: #735744;
+}
+
+/* =========================
+   3. 버튼
+========================= */
+
+body.autumn-theme .hero-cta-btn,
+body.autumn-theme .btn-success {
+  color: #a86d42;
+  background-color: transparent;
+  border: 1px solid rgba(183, 122, 79, 0.8);
+  box-shadow: 0 10px 24px rgba(152, 96, 70, 0.22);
+}
+
+body.autumn-theme .hero-cta-btn:hover,
+body.autumn-theme .hero-cta-btn:focus-visible,
+body.autumn-theme .hero-cta-btn:active,
+body.autumn-theme .btn-success:hover,
+body.autumn-theme .btn-success:focus-visible,
+body.autumn-theme .btn-success.active,
+body.autumn-theme .btn-success:active {
+  color: #ffffff;
+  background-color: #c08354;
+  border-color: #c08354;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(152, 96, 70, 0.28);
+}
+
+body.autumn-theme .gls-btn-secondary {
+  color: #a86d42;
+  border-color: rgba(183, 122, 79, 0.72);
+  background-color: transparent;
+  box-shadow: 0 8px 18px rgba(152, 96, 70, 0.16);
+}
+
+body.autumn-theme .gls-btn-secondary:hover,
+body.autumn-theme .gls-btn-secondary:focus-visible,
+body.autumn-theme .gls-btn-secondary.active,
+body.autumn-theme .gls-btn-secondary:active {
+  color: #ffffff;
+  background-color: #c08354;
+  border-color: #c08354;
+  box-shadow: 0 12px 28px rgba(152, 96, 70, 0.24);
+}
+
+/* =========================
+   4. quote-card
+========================= */
+
+body.autumn-theme .quote-card {
+  background-color: #FFF7EC; /* 노트 같은 크림색 */
+  background-image: none;
+  color: #3B2A22;
+  box-shadow: 0 10px 24px rgba(152, 96, 70, 0.18);
+}
+
+/* =========================
+   5. 뱃지 / 태그
+========================= */
+
+body.autumn-theme .gls-author-badge {
+  background-color: #FCEBD8 !important;
+  border-color: #e2c19f !important;
+  color: #a06445 !important;
+}
+
+body.autumn-theme .gls-tag-btn {
+  background-color: transparent;
+  border-color: #e2c19f;
+  color: #a06445;
+}
+
+body.autumn-theme .gls-tag-btn:hover {
+  background-color: #f3dcbf;
+  color: #7c4f32;
+}
+
+/* 선택된 해시태그 칩 (작성/검색 영역) */
+body.autumn-theme .hashtag-chip {
+  background-color: #FCEBD8;
+  color: #a06445;
+  border: 1px solid #e2c19f;
+}
+body.autumn-theme .hashtag-chip .hashtag-chip-remove {
+  color: #a06445;
+}
+body.autumn-theme .hashtag-chip .hashtag-chip-remove:hover {
+  color: #7c4f32;
+}
+
+/* =========================
+   6. 좋아요 하트
+========================= */
+
+body.autumn-theme .like-btn .like-heart {
+  color: #7c4f32;
+}
+
+body.autumn-theme .like-btn.liked .like-heart {
+  color: #d86446; /* 붉은 단풍 색 (톤 다운) */
+}
+
+/* =========================
+   7. 푸터
+========================= */
+
+body.autumn-theme {
+  --gls-footer-bg: linear-gradient(90deg, #d6a575, #a87052);
+  --gls-footer-text: #FFF9F0;
+  --gls-footer-border: rgba(255, 255, 255, 0.25);
+  --gls-footer-link: #FFF9F0;
+}
+
+/* 피드 탭 & 저장 버튼 테마 매핑 */
+body.autumn-theme .feed-tabs .feed-tab {
+  color: #b77a4f;
+  border-color: rgba(183, 122, 79, 0.24);
+  background: rgba(183, 122, 79, 0.08);
+}
+
+body.autumn-theme .feed-tabs .feed-tab.feed-tab-active,
+body.autumn-theme .feed-tabs .feed-tab.active {
+  background: #b77a4f;
+  border-color: #b77a4f;
+  color: #fff;
+}
+
+body.autumn-theme .nav-category-item:hover,
+body.autumn-theme .nav-category-item:focus-visible {
+  background: rgba(183, 122, 79, 0.14);
+  color: #7c4f32;
+}
+
+body.autumn-theme .post-category-label {
+  background: rgba(183, 122, 79, 0.08);
+  border-color: rgba(183, 122, 79, 0.24);
+  color: #7c4f32;
+}
+
+body.autumn-theme .gls-save-btn {
+  color: #a86d42;
+  border-color: #b77a4f;
+}
+
+body.autumn-theme .gls-save-btn:hover,
+body.autumn-theme .gls-save-btn:focus-visible {
+  background: rgba(183, 122, 79, 0.14);
+  color: #7c4f32;
+  border-color: #b77a4f;
+}

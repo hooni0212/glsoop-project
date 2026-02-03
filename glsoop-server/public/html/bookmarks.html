@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>글숲 - 북마크</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/app.css">
+</head>
+<body class="winter-theme page-bookmarks">
+  <nav class="navbar navbar-expand-lg navbar-dark custom-navbar fixed-top nav-height">
+    <div class="gls-container">
+      <a class="navbar-brand" href="/index.html">글숲</a>
+      <button class="navbar-toggler" type="button" data-gls-toggle="nav" aria-controls="navbarNav" aria-expanded="false">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav gls-me-lg-3 category-dropdown-nav">
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="categoryDropdown" role="button" data-gls-toggle="dropdown" aria-expanded="false">카테고리</a>
+            <ul class="dropdown-menu nav-category-menu" aria-labelledby="categoryDropdown">
+              <li><a class="dropdown-item nav-category-item" href="/explore">전체</a></li>
+              <li><a class="dropdown-item nav-category-item" href="/html/category.html?category=poem">시</a></li>
+              <li><a class="dropdown-item nav-category-item" href="/html/category.html?category=essay">에세이/일기</a></li>
+              <li><a class="dropdown-item nav-category-item" href="/html/category.html?category=short">짧은 구절</a></li>
+            </ul>
+          </li>
+        </ul>
+        <ul class="navbar-nav gls-ms-auto before-login">
+          <li class="nav-item"><a class="nav-link" href="/html/login.html">로그인</a></li>
+          <li class="nav-item"><a class="nav-link" href="/html/signup.html">회원가입</a></li>
+        </ul>
+        <ul class="navbar-nav gls-ms-auto after-login" style="display:none;">
+          <li class="nav-item"><span class="nav-link" id="navUserName"></span></li>
+          <li class="nav-item"><a class="nav-link" href="/html/mypage.html">마이페이지</a></li>
+          <li class="nav-item"><a class="nav-link" href="/html/editor.html">글쓰기</a></li>
+          <li class="nav-item">
+            <button
+              class="user-profile"
+              id="logoutBtn"
+              type="button"
+              aria-label="로그아웃"
+            >
+              <span class="user-profile-inner">
+                <svg
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <g data-name="Layer 2" id="Layer_2">
+                    <path
+                      d="m15.626 11.769a6 6 0 1 0 -7.252 0 9.008 9.008 0 0 0 -5.374 8.231 3 3 0 0 0 3 3h12a3 3 0 0 0 3-3 9.008 9.008 0 0 0 -5.374-8.231zm-7.626-4.769a4 4 0 1 1 4 4 4 4 0 0 1 -4-4zm10 14h-12a1 1 0 0 1 -1-1 7 7 0 0 1 14 0 1 1 0 0 1 -1 1z"
+                    ></path>
+                  </g>
+                </svg>
+                <span class="user-profile-label">로그아웃</span>
+              </span>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-shell">
+    <div class="gls-container">
+      <div class="page-hero-card gls-surface-veil gls-flex gls-justify-between gls-items-start gls-gap-3">
+        <div>
+          <div class="page-hero-meta">
+            <p class="eyebrow gls-mb-0">내 북마크 폴더</p>
+            <span class="pill">정리된 숲길</span>
+          </div>
+          <h2 class="gls-mt-2 gls-mb-1">북마크</h2>
+          <p class="gls-mb-0 gls-text-muted">찜한 글들을 같은 유리 패널 톤으로 둘러볼 수 있게 정리했어요.</p>
+        </div>
+        <button class="gls-btn gls-btn-primary" id="createListBtn">+ 새 폴더</button>
+      </div>
+
+      <div class="page-grid-split">
+        <div class="page-panel gls-surface-veil">
+          <div class="gls-spread gls-mb-3">
+            <h5 class="gls-mb-0">폴더</h5>
+            <span class="gls-text-muted gls-text-small">정렬된 북마크</span>
+          </div>
+          <ul class="bookmark-folder-list" id="bookmarkLists"></ul>
+        </div>
+        <div class="page-panel gls-surface-veil" id="bookmarkContent">
+          <div class="gls-spread gls-mb-3">
+            <h5 class="gls-mb-0">저장한 글</h5>
+            <span class="gls-text-muted gls-text-small">글을 선택해 감상하세요</span>
+          </div>
+          <div id="bookmarkPosts">
+            <p class="gls-text-muted gls-mb-0">폴더를 선택하면 저장된 글을 볼 수 있습니다.</p>
+          </div>
+          <div class="gls-grid gls-mt-3" id="bookmarkLoadMoreWrap" style="display:none;">
+            <button class="gls-btn gls-btn-secondary" id="bookmarkLoadMore">더 보기</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="modal fade" id="listFormModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="listFormTitle">새 폴더 만들기</h5>
+          <button type="button" class="gls-modal-close" data-gls-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="gls-mb-3">
+            <label for="listNameInput" class="gls-label">폴더 이름</label>
+            <input type="text" class="gls-input" id="listNameInput" maxlength="80" required>
+          </div>
+          <div class="gls-mb-3">
+            <label for="listDescInput" class="gls-label">설명 (선택)</label>
+            <textarea class="gls-input" id="listDescInput" rows="2"></textarea>
+          </div>
+          <input type="hidden" id="listEditId" value="">
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="gls-btn gls-btn-secondary" data-gls-dismiss="modal">취소</button>
+          <button type="button" class="gls-btn gls-btn-primary" id="saveListBtn">저장</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/dompurify@3/dist/purify.min.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/js/theme.js" defer></script>
+  <script src="/js/header.js"></script>
+  <script src="/js/postCard.js"></script>
+  <script src="/js/bookmarkModal.js"></script>
+  <script src="/js/bookmarks.js"></script>
+</body>
+</html>
